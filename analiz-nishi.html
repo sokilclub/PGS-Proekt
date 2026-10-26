@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#061019">
+<meta name="color-scheme" content="dark">
+<title>Аналіз ніші — Індивідуальні проєкти будинків і реконструкція · ПГС-Проект</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#061019;
+  --ink:#f2f8fc;
+  --dim:#93aabb;
+  --line:rgba(255,255,255,.1);
+  --card:rgba(255,255,255,.042);
+  --accent:#fb6e28;
+  --accent2:#ff9a5c;
+  --accent-bd:rgba(251,110,40,.44);
+  --accent-bg:rgba(251,110,40,.08);
+  --accent-strong:rgba(251,110,40,.5);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{
+  background-color:#061019 !important;
+  background:#061019 !important;
+  min-height:100vh;
+  margin:0;
+  padding:0;
+}
+body{
+  color:#f2f8fc;
+  font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  font-weight:500;
+  font-size:20px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+  position:relative;
+  overflow-x:hidden;
+}
+.page-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60vw 40vw at 85% -5%, rgba(251,110,40,.15), transparent 60%),
+    radial-gradient(55vw 45vw at 0% 100%, rgba(251,110,40,.10), transparent 60%);
+}
+.container{
+  position:relative;z-index:1;
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  padding:60px 40px;
+  box-sizing:border-box;
+}
+
+/* headings */
+h1{
+  font-family:'Montserrat',sans-serif;
+  font-weight:900;
+  font-size:64px;
+  line-height:1.08;
+  letter-spacing:-.01em;
+  margin:18px 0 0;
+  text-transform:uppercase;
+}
+h2{
+  font-family:'Montserrat',sans-serif;
+  font-weight:900;
+  font-size:48px;
+  line-height:1.12;
+  text-transform:uppercase;
+  margin:0 0 10px;
+  color:#fff;
+}
+h3{
+  font-family:'Montserrat',sans-serif;
+  font-weight:900;
+  font-size:32px;
+  line-height:1.18;
+  text-transform:uppercase;
+  margin:64px 0 18px;
+  color:#fff;
+}
+.grad{
+  background:linear-gradient(90deg,#ffffff 0%, var(--accent) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:#fff; /* fallback if clip unsupported */
+}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){
+  .grad{color:#fff;-webkit-text-fill-color:#fff}
+}
+p{margin:0 0 16px}
+a{color:var(--accent);text-decoration:none;word-break:break-word}
+a:hover{text-decoration:underline}
+strong{font-weight:800;color:#fff}
+
+/* eyebrow */
+.eyebrow{
+  display:inline-flex;align-items:center;
+  padding:8px 20px;
+  border-radius:99px;
+  border:1px solid var(--accent-bd);
+  background:var(--accent-bg);
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:14px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:22px;
+}
+
+/* sections */
+.section{padding-top:80px}
+.section + .section{border-top:1px solid var(--line)}
+.lede{color:var(--dim);font-size:20px;max-width:78ch}
+
+/* cards */
+.card{
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:var(--card);
+  padding:28px 32px;
+  box-sizing:border-box;
+  break-inside:avoid;page-break-inside:avoid;
+}
+.card + .card{margin-top:32px}
+.comp-name{
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  font-size:24px;
+  color:#fff;
+  margin:0 0 4px;
+  text-transform:none;
+}
+.sub{
+  font-family:'Montserrat',sans-serif;
+  font-weight:900;
+  font-size:20px;
+  text-transform:uppercase;
+  margin:22px 0 8px;
+}
+.meta{color:var(--dim);font-size:16px;margin:0 0 14px}
+.card ul{margin:6px 0 0;padding-left:22px}
+.card li{margin:4px 0}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;margin:8px 0 0;border-radius:16px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:16px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:rgba(255,255,255,.04);color:#fff;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.03em}
+tr:last-child td{border-bottom:none}
+td.yes{color:var(--accent);font-weight:700}
+
+/* lists big */
+.big-list{list-style:none;margin:0;padding:0}
+.big-list li{
+  font-size:21px;line-height:1.5;
+  padding:16px 0 16px 34px;position:relative;
+  border-bottom:1px solid var(--line);
+}
+.big-list li:last-child{border-bottom:none}
+.big-list li::before{
+  content:"";position:absolute;left:0;top:24px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);
+}
+
+/* offer cards */
+.offer{
+  border-radius:20px;
+  border:1px solid var(--accent-strong);
+  background:linear-gradient(180deg, rgba(251,110,40,.06), rgba(255,255,255,.03));
+  box-shadow:0 0 40px -18px rgba(251,110,40,.45);
+  padding:30px 34px;
+}
+.offer + .offer{margin-top:32px}
+.offer-tag{font-size:16px;color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.offer-text{font-family:'Manrope',sans-serif;font-weight:800;font-size:28px;line-height:1.3;color:#fff;margin:0 0 18px}
+.offer ul{list-style:none;margin:0;padding:0}
+.offer li{position:relative;padding:10px 0 10px 30px;font-size:19px;color:var(--ink)}
+.offer li::before{content:"";position:absolute;left:0;top:19px;width:14px;height:2px;background:var(--accent)}
+
+/* title card */
+.title-card{
+  margin-top:40px;border-radius:20px;border:1px solid var(--line);
+  background:var(--card);padding:30px 34px;max-width:620px;
+}
+.title-card .row{font-size:19px;margin:6px 0}
+.title-card .k{color:var(--dim)}
+.date{color:var(--dim);font-size:16px;margin-top:22px}
+
+/* final block */
+.final{
+  margin-top:80px;
+  padding:48px;
+  border:2px solid var(--accent);
+  background:var(--accent-bg);
+  border-radius:20px;
+  text-align:center;
+}
+.final .q{font-family:'Manrope',sans-serif;font-weight:800;font-size:32px;line-height:1.3;color:#fff;margin:0 0 18px}
+.final .cta{font-size:20px;color:var(--ink)}
+.final .cta a{font-weight:800}
+
+/* footer under sections */
+.sfoot{color:var(--dim);font-size:14px;margin:34px 0 0}
+.sfoot a{color:var(--dim);font-weight:700}
+.sfoot a:hover{color:var(--accent)}
+
+/* note */
+.note{color:var(--dim);font-size:16px;font-style:normal;margin-top:10px}
+
+@media(max-width:1024px){
+  .container{padding:56px 32px}
+  h1{font-size:54px}
+  h2{font-size:42px}
+}
+@media(max-width:768px){
+  .container{padding:44px 20px}
+  body{font-size:18px}
+  h1{font-size:34px}
+  h2{font-size:32px}
+  h3{font-size:24px;margin-top:48px}
+  .offer-text{font-size:24px}
+  .final{padding:32px 22px}
+  .final .q{font-size:24px}
+  .lede{font-size:18px}
+  .big-list li{font-size:18px}
+  .offer li{font-size:17px}
+}
+@media print{
+  html,body{background:#061019 !important;background-color:#061019 !important;color:#f2f8fc !important}
+  .page-glow{display:none}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section{page-break-before:always;break-before:page}
+  .section:first-of-type{page-break-before:avoid;break-before:avoid}
+  .card,.offer,.final,h2,h3,.eyebrow,.big-list li{break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="page-glow" aria-hidden="true"></div>
+<div class="container">
+
+<!-- ░░░ РОЗДІЛ 1. ТИТУЛ ░░░ -->
+<header class="section" style="padding-top:100px;border:none">
+  <span class="eyebrow">Маркетинговий аналіз</span>
+  <h1>Аналіз ніші</h1>
+  <p class="grad" style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;text-transform:uppercase;margin:14px 0 20px;line-height:1.2">Індивідуальні проєкти будинків, будівель і реконструкція</p>
+  <p class="lede">Документ зводить конкурентне поле ніші, портрет цільової аудиторії та три готові варіанти оффера для сайту, щоб ухвалити рішення про позиціонування й перший екран.</p>
+
+  <div class="title-card">
+    <div class="row"><span class="k">Для:</span> <strong>ПГС-Проект, Дніпро</strong></div>
+    <div class="row"><span class="k">Від:</span> <strong>Соколов Олег</strong></div>
+    <div class="row"><span class="k">Контакт:</span> <a href="https://t.me/Sokil_65" target="_blank" rel="noopener noreferrer">@Sokil_65</a> · <a href="tel:+380991383775">+38 099 138 3775</a></div>
+    <div class="date">Дата формування: 26 жовтня 2026</div>
+  </div>
+</header>
+
+<!-- ░░░ РОЗДІЛ 2. КОНКУРЕНТИ ░░░ -->
+<section class="section">
+  <span class="eyebrow">Конкурентне поле</span>
+  <h2 class="grad">Аналіз конкурентів</h2>
+  <p class="lede">Ринок індивідуального проєктування будинків, будівель і реконструкції в Дніпрі та Україні конкурентний і неоднорідний: працюють локальні проєктні організації та архітектурні студії з онлайн-обслуговуванням по всій країні. Основні конкурентні підходи — повний цикл «проєкт → дозволи → будівництво», готові та адаптовані проєкти, 3D-візуалізація, інженерні рішення, авторський нагляд і прозорі цінові пакети.</p>
+
+  <h3>Топ-5 конкурентів</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Конкурент</th><th>Географія</th><th>Основна пропозиція</th><th>Публічна ціна</th></tr></thead>
+      <tbody>
+        <tr><td>ModulFrame</td><td>Дніпро та область</td><td>Проєктування будинків, інтер'єру, ландшафту; будівництво</td><td>Ціна не вказана</td></tr>
+        <tr><td>FAVOR Group</td><td>Київ, Запоріжжя, онлайн по Україні</td><td>Проєктування, дозволи, експертиза, реконструкція</td><td>Від 10 000 грн</td></tr>
+        <tr><td>АБ «Архітектурна Кухня»</td><td>Україна</td><td>Індивідуальні та типові проєкти, інтер'єр, ландшафт, макети</td><td>Від 200 грн/м²</td></tr>
+        <tr><td>HOUSE'D</td><td>Україна</td><td>Індивідуальне проєктування, реконструкція, комерційні об'єкти</td><td>Від 40 грн/м²</td></tr>
+        <tr><td>DeZZign</td><td>Київ, Харків, Дніпро, Львів, Івано-Франківськ, онлайн</td><td>Індивідуальні приватні будинки, архітектура та інтер'єр</td><td>Ціна не вказана</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Це не рейтинг «кращих» або «гірших» компаній. Вибірка сформована за перетином послуг, географією та релевантністю для ПГС-Проект.</p>
+
+  <!-- 1 -->
+  <div class="card" style="margin-top:40px">
+    <p class="comp-name">1. ModulFrame</p>
+    <p class="meta">Сайт: <a href="https://modulframe.com.ua/proektuvannya" target="_blank" rel="noopener noreferrer">modulframe.com.ua/proektuvannya</a></p>
+    <p>Дніпровська компанія, що поєднує проєктування будинків, дизайн інтер'єру, ландшафтний дизайн, будівництво, ремонт та інженерні рішення. Ключова ідея — комплексний маршрут від ідеї до реалізації.</p>
+    <div class="sub grad">Послуги</div>
+    <p>Індивідуальні, типові та адаптовані проєкти будинків; прив'язка до ділянки, ґрунтів і комунікацій; ескізний і робочий проєкти; інженерні мережі; 3D-візуалізація; дизайн інтер'єру; ландшафтний дизайн; геологія та геодезія; авторський нагляд; подальша реалізація.</p>
+    <div class="sub grad">Оффери</div>
+    <p>Знижки на проєктування при подальшій реалізації; безоплатний авторський нагляд; проєкт будинку в подарунок при замовленні будівництва; комплексне обслуговування «під ключ»; консультація.</p>
+    <div class="sub grad">Ціни</div>
+    <p>Ціна не вказана. Терміни: проєкт будинку — 1–3 місяці; дизайн-проєкт — 1–3 місяці; ландшафтний проєкт — 2–6 тижнів.</p>
+    <div class="sub grad">Позиціонування</div>
+    <p>Контроль результату: «без переробок, зайвих витрат і хаосу на будівельному майданчику».</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <p class="comp-name">2. FAVOR Group</p>
+    <p class="meta">Сайт: <a href="https://favorgroup.com.ua" target="_blank" rel="noopener noreferrer">favorgroup.com.ua</a></p>
+    <p>Проєктна компанія з офісами в Києві та Запоріжжі, що працює онлайн по Україні. Пропонує повний спектр послуг: від ескізу до робочої документації, експертизи й дозволів.</p>
+    <div class="sub grad">Послуги</div>
+    <p>Проєктування приватних будинків і котеджів; комерційної нерухомості; реконструкції комерційної нерухомості; перепланування квартир; МБУ; будівельний паспорт; технічне обстеження; експертиза проєктної документації; звіт про доступність для МГН.</p>
+    <div class="sub grad">Оффери</div>
+    <p>Безкоштовна консультація; ціна фіксується в договорі; супровід на всіх етапах; зворотний дзвінок протягом 15 хвилин; прозорий кошторис.</p>
+    <div class="sub grad">Ціни</div>
+    <p>Будинки й котеджі — від 20 000 грн; комерційна нерухомість — від 40 000 грн; реконструкція комерційної нерухомості — від 40 000 грн; перепланування квартири — від 20 000 грн; МБУ — від 20 000 грн; схема намірів забудови — від 8 000 грн; будівельний паспорт — від 15 000 грн; технічне обстеження — від 20 000 грн; експертиза — від 15 000 грн; звіт МГН — від 10 000 грн.</p>
+    <div class="sub grad">Позиціонування</div>
+    <p>Організаційно-процесний партнер: від концепції до дозволів, експертизи та супроводу.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <p class="comp-name">3. АБ «Архітектурна Кухня»</p>
+    <p class="meta">Сайт: <a href="https://ak-projects.com.ua/services" target="_blank" rel="noopener noreferrer">ak-projects.com.ua/services</a></p>
+    <p>Архітектурне бюро з широким переліком послуг: від ескізних проєктів до інтер'єрного й ландшафтного дизайну, геодезії, геології, нагляду та макетів.</p>
+    <div class="sub grad">Послуги</div>
+    <p>Ескізний проєкт; архітектурний розділ; конструктивний розділ; інженерні мережі; реконструкція з надбудовою; візуалізація; дизайн інтер'єрів; ландшафтний дизайн; геологія, геодезія, архітектурний нагляд; макети.</p>
+    <div class="sub grad">Оффери</div>
+    <p>Типові проєкти; невеликі коригування типового проєкту; прив'язка до умов ділянки; консультація архітектора; виготовлення макетів.</p>
+    <div class="sub grad">Ціни</div>
+    <p>Ескізний проєкт — 200 грн/м²; архітектурний розділ — 300 грн/м²; конструктивний — 500 грн/м²; інженерні мережі — від 80 грн/м²; реконструкція з надбудовою — 250–300 грн/м²; візуалізація за наявності 3D-моделі — 4 500 грн за 6 фото; дизайн інтер'єрів — 850–1 250 грн/м²; ескізний проєкт до 60 м² — 12 000 грн; архітектурний розділ до 60 м² — 18 000 грн; візуалізація та генплан до 10 соток — від 15 000 грн; із елементами благоустрою — від 25 000 грн; реконструкції, добудови, перебудови — договірна; індивідуальні будинки від 300 до 1000 м² — договірна.</p>
+    <div class="sub grad">Позиціонування</div>
+    <p>Доступний і гнучкий постачальник архітектурних послуг: клієнт може почати з типового проєкту та адаптувати його.</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <p class="comp-name">4. HOUSE'D</p>
+    <p class="meta">Сайт: <a href="https://housed.com.ua/uslugi/proektirovanie" target="_blank" rel="noopener noreferrer">housed.com.ua/uslugi/proektirovanie</a></p>
+    <p>Компанія виконує проєктування житлових, громадських і промислових будівель, а також реконструкцію, прибудови, надбудови та перепланування. Заявлено юридичний супровід і узгодження проєктів.</p>
+    <div class="sub grad">Послуги</div>
+    <p>Індивідуальні будинки, котеджі, особняки, дачні будинки; дерев'яні та каркасні будинки; реконструкція; прибудови й надбудови; перепланування; кафе, ресторани, магазини, склади, промислові та адміністративні об'єкти; інженерні мережі; юридичний супровід; візуалізація, дизайн інтер'єрів, геологія, геодезія.</p>
+    <div class="sub grad">Оффери</div>
+    <p>Готові проєкти за категоріями; пакети BASE, STANDARD, FULL; знижки для великих об'єктів; націнки для малих площ; індивідуальна ціна для реконструкції.</p>
+    <div class="sub grad">Ціни</div>
+    <p>Ескізний проєкт — 40 грн/м²; архітектурний розділ — 60 грн/м²; конструктивний — 60 грн/м²; інженерні мережі — 45 грн/м²; візуалізація за наявності 3D-моделі — 500 грн/шт; дизайн інтер'єрів — 150–200 грн/м²; реконструкція, прибудова, великі об'єкти, геологія й геодезія — договірна. У пакетній моделі: ескіз — від $4/м², робочий проєкт — від $10/м², дизайн-проєкт — від $15/м² у BASE; знижки 10% для 320–550 м² і 15% для 550–1000 м²; націнки 20% для до 120 м² і 15% для до 180 м².</p>
+    <div class="sub grad">Позиціонування</div>
+    <p>Масштабний проєктний постачальник із широким каталогом і пакетним ціноутворенням.</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="card">
+    <p class="comp-name">5. DeZZign</p>
+    <p class="meta">Сайт: <a href="https://dezzign.com.ua/proekt-pryvatnoho-budynku" target="_blank" rel="noopener noreferrer">dezzign.com.ua/proekt-pryvatnoho-budynku</a></p>
+    <p>Архітектурна студія, що проєктує приватні будинки з нуля для клієнтів у Києві, Харкові, Дніпрі, Львові, Івано-Франківську, а також працює онлайн по Україні та за кордоном.</p>
+    <div class="sub grad">Послуги</div>
+    <p>Аналіз ділянки; концепція та об'ємне рішення; планування; дизайн фасадів; 3D-візуалізації; робоча документація; авторський нагляд; інтегрований підхід до архітектури та інтер'єру.</p>
+    <div class="sub grad">Оффери</div>
+    <p>Індивідуальний проєкт під спосіб життя, родину, ділянку та бюджет; онлайн-консультації; 3D-візуалізації та віртуальні прогулянки; проєктування з урахуванням бюджету; дозвільна документація за участю ліцензованих фахівців.</p>
+    <div class="sub grad">Ціни</div>
+    <p>Ціна не вказана. Терміни, вартість і авторський нагляд обговорюються індивідуально залежно від складності та стилістики об'єкта.</p>
+    <div class="sub grad">Позиціонування</div>
+    <p>Персональна архітектура замість готового плану: «різниця між будинком і вашим будинком».</p>
+  </div>
+
+  <h3>Порівняння офферів і цін</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Параметр</th><th>ModulFrame</th><th>FAVOR Group</th><th>Архітектурна Кухня</th><th>HOUSE'D</th><th>DeZZign</th></tr></thead>
+      <tbody>
+        <tr><td>Індивідуальні будинки</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td></tr>
+        <tr><td>Готові / типові</td><td class="yes">Так</td><td>Не вказано</td><td class="yes">Так</td><td class="yes">Так</td><td>Ні</td></tr>
+        <tr><td>Реконструкція</td><td class="yes">Так</td><td>Так, комерційна</td><td class="yes">Так</td><td class="yes">Так</td><td>Не вказано</td></tr>
+        <tr><td>Інженерні мережі</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td></tr>
+        <tr><td>3D-візуалізація</td><td class="yes">Так</td><td>Не вказано</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td></tr>
+        <tr><td>Дозвільна документація</td><td>Не вказано</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td></tr>
+        <tr><td>Авторський нагляд</td><td class="yes">Так</td><td>Не вказано</td><td class="yes">Так</td><td>Не вказано</td><td class="yes">Так</td></tr>
+        <tr><td>Будівництво / реалізація</td><td class="yes">Так</td><td>Не вказано</td><td>Не вказано</td><td>Не вказано</td><td class="yes">Так</td></tr>
+        <tr><td>Публічна ціна</td><td>Ні</td><td class="yes">Так</td><td class="yes">Так</td><td class="yes">Так</td><td>Ні</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:32px">
+    <div class="sub grad" style="margin-top:0">Повторювані оффери</div>
+    <p>Повний цикл «проєкт → документація → дозволи → будівництво або нагляд»; індивідуальний проєкт під ділянку, бюджет і спосіб життя; 3D-візуалізація; інженерні мережі; реконструкція, прибудова, надбудова; консультація; авторський нагляд.</p>
+    <div class="sub grad">Цінові орієнтири</div>
+    <p>FAVOR Group: від 20 000 грн за будинок і від 40 000 грн за реконструкцію комерційної нерухомості. «Архітектурна Кухня»: 200–500 грн/м² за основні розділи, реконструкція 250–300 грн/м². HOUSE'D: 40–60 грн/м² за ескіз, архітектурний і конструктивний розділи. ModulFrame і DeZZign: ціна не вказана.</p>
+  </div>
+
+  <h3>Аналіз структури сайтів</h3>
+  <div class="card">
+    <p><strong>Повторювані елементи:</strong> головний екран із цінністю; оффер у вигляді консультації, комплексного підходу, знижки або фіксованої ціни; послуги; пояснення, що входить у роботу; етапи; портфоліо або кейси; FAQ; ціни; форма заявки; контакти; докази експертності через ДБН, сертифікованих фахівців, ліцензії, досвід і геологію/геодезію.</p>
+    <p style="margin-bottom:0"><strong>Повторювані структурні рішення:</strong> спочатку пояснити, чому проєкт знижує ризики та витрати; показати послуги як рішення для етапу життя клієнта; додати етапи роботи; показати візуальні приклади; дати форму заявки й телефон поруч із оффером; пояснити різницю між ескізним і робочим проєктом; відокремити індивідуальний проєкт від типового.</p>
+  </div>
+
+  <h3>Повторювані болі та потреби клієнтів</h3>
+  <div class="card">
+    <p><strong>Підтверджені болі.</strong> Страх переробок і непередбачуваних витрат; потреба врахувати ґрунти, рельєф, комунікації та ділянку; невизначеність щодо дозволів, будівельного паспорта, МБУ й експертизи; складність вибору між типовим та індивідуальним проєктом; потреба поєднати архітектуру, інтер'єр, інженерію та ландшафт; потреба контролювати відповідність будівництва проєкту; потреба отримати документацію для будівництва й легалізації.</p>
+    <p><strong>Страхи та заперечення.</strong> «Проєкт може бути красивим, але нереалізовним»; «не розумію, що входить у ескізний і робочий проєкт»; «ціна може зрости після початку роботи»; «не знаю, чи потрібні геологія, геодезія, МБУ або будівельний паспорт»; «готовий проєкт може не підійти до ділянки»; «під час будівництва доведеться багато змінювати».</p>
+    <p><strong>Обіцяні результати.</strong> Передбачуваний результат до початку будівництва; контроль витрат і зменшення переробок; проєкт, прив'язаний до ділянки та бюджету; документи для будівництва й дозволів; узгоджені архітектурні, конструктивні та інженерні рішення; супровід реалізації.</p>
+    <p style="margin-bottom:0"><strong>Аналітичний висновок.</strong> Клієнт купує не набір креслень, а зниження невизначеності: що можна побудувати на ділянці, скільки це приблизно коштуватиме, які документи потрібні та як уникнути помилок.</p>
+  </div>
+
+  <h3>Слабкі місця та незакриті можливості</h3>
+  <div class="card">
+    <ol style="margin:0;padding-left:22px">
+      <li style="margin-bottom:12px"><strong>Непрозорі або фрагментарні ціни.</strong> ModulFrame і DeZZign не публікують ціну; FAVOR Group вказує стартові суми; «Архітектурна Кухня» та HOUSE'D публікують тарифи за м². Можливість для ПГС-Проект: опублікувати стартову сітку вартостей для ескізного проєкту, архітектурного й конструктивного розділів, інженерних мереж, 3D-візуалізації, будівельного паспорта та реконструкції.</li>
+      <li style="margin-bottom:12px"><strong>Слабка сегментація за типом клієнта.</strong> Можливість: окремі сторінки для приватного будинку, котеджу, реконструкції й надбудови, комерційної будівлі, виробничого приміщення, офісу, дозвільної документації та інженерного проєктування.</li>
+      <li style="margin-bottom:12px"><strong>Недостатньо зрозумілої різниці між пакетами.</strong> Можливість: створити три пакети — «Для початку» (ескіз, концепція, 3D, попередній бюджет), «Для будівництва» (робочий проєкт, конструкції, інженерія), «Під ключ» (проєкт, дозволи, супровід, авторський нагляд).</li>
+      <li style="margin-bottom:12px"><strong>Недостатньо доказів результату.</strong> Портфоліо та кейси представлені нерівномірно. Можливість: публікувати кейси у форматі ділянка → задача → обмеження → рішення → склад документації → строк → результат → фото/3D.</li>
+      <li style="margin-bottom:12px"><strong>Слабка інтеграція архітектури, інтер'єру та реалізації.</strong> ModulFrame і DeZZign активно використовують комплексний підхід. Можливість для ПГС-Проект: підсилити позицію «проєкт, який реально можна побудувати» — узгодження архітектури, конструкцій, інженерії, дозволів і подальшого супроводу.</li>
+      <li><strong>Слабкі CTA.</strong> У частини конкурентів CTA зводиться до «замовити послугу» або «залишити заявку». Можливість: використовувати конкретні CTA — «Отримати попередню вартість проєкту», «Перевірити, чи можна будувати на ділянці», «Отримати консультацію щодо реконструкції», «Замовити будівельний паспорт», «Отримати 3D-візуалізацію будинку».</li>
+    </ol>
+  </div>
+
+  <h3>Висновки для клієнта</h3>
+  <div class="card">
+    <p>Спільне для конкурентів — продаж не лише проєкту, а й контролю: над ділянкою, бюджетом, нормами, дозволами, інженерією та реалізацією. Домінуючі оффери — безкоштовна консультація, індивідуальний підхід, повний цикл «від ідеї до будівництва», 3D-візуалізація, супровід дозволів, авторський нагляд і знижки при подальшій співпраці.</p>
+    <p>Цінове поле неоднорідне: від 40 грн/м² за ескізний проєкт у HOUSE'D до 500 грн/м² за індивідуальний проєкт в Akvilon Pro; FAVOR Group вказує від 20 000 грн за будинок і від 40 000 грн за реконструкцію комерційної нерухомості.</p>
+    <p style="margin-bottom:0">Найсильніша можливість диференціації для ПГС-Проект — стати зрозумілим партнером «від ідеї до реального будівництва»: чіткі пакети, публічні стартові ціни, сегментовані сторінки, кейси, 3D-візуалізації, прозорий процес і сильні CTA для різних типів клієнтів.</p>
+  </div>
+
+  <h3>Джерела та посилання</h3>
+  <div class="card">
+    <p style="margin-bottom:0"><a href="https://pgs-proekt.com.ua" target="_blank" rel="noopener noreferrer">ПГС-Проект</a> · <a href="https://modulframe.com.ua/proektuvannya" target="_blank" rel="noopener noreferrer">ModulFrame</a> · <a href="https://favorgroup.com.ua" target="_blank" rel="noopener noreferrer">FAVOR Group</a> · <a href="https://ak-projects.com.ua/services" target="_blank" rel="noopener noreferrer">Архітектурна Кухня</a> · <a href="https://housed.com.ua/uslugi/proektirovanie" target="_blank" rel="noopener noreferrer">HOUSE'D</a> · HOUSE'D — житловий будинок · <a href="https://dezzign.com.ua/proekt-pryvatnoho-budynku" target="_blank" rel="noopener noreferrer">DeZZign</a> · Геоспектр-7 · Akvilon Pro · УКРКОТЕДЖ</p>
+  </div>
+
+  <p class="sfoot">Соколов Олег · <a href="https://t.me/Sokil_65" target="_blank" rel="noopener noreferrer">@Sokil_65</a></p>
+</section>
+
+<!-- ░░░ РОЗДІЛ 3. ЦА ░░░ -->
+<section class="section">
+  <span class="eyebrow">Портрет покупця</span>
+  <h2 class="grad">Цільова аудиторія</h2>
+  <p class="lede">Основа — конкурентний аналіз ніші. Болі, бажання й головний страх виведені з підтверджених потреб ринку. Демографічний портрет — обґрунтоване припущення на основі ніші, а не окремо зібрані дані.</p>
+
+  <h3>Хто клієнт</h3>
+  <div class="card">
+    <p>Доросла людина 30–55 років, частіше сімейна, з дітьми або плануванням їх. Має ділянку в Дніпрі чи передмісті — куплену або отриману. Фінансово — середній рівень і вище: будівництво власного будинку це великі гроші, тож людина рахує кожну суму й боїться переплатити. Стать для цієї ніші не вирішальна, рішення часто ухвалюється парою разом.</p>
+    <p>Людина дійшла до точки, де треба отримати проєкт, щоб почати будувати. Вона розуміє, що без проєкту й документів будувати ризиковано, але не знає, з чого почати і що саме замовляти.</p>
+    <p style="margin-bottom:0">Що вже пробувала: дивилася готові (типові) проєкти й сумнівається, чи підійдуть під її ділянку; намагалася сама розібратися, чи потрібні геологія, геодезія, МБУ, будівельний паспорт — і заплуталася; порівнювала виконавців, але наштовхнулася на непрозорі ціни й не змогла оцінити бюджет заздалегідь. Ключове: вона хоче не «красиві картинки», а впевненість, що це реально збудувати на її ділянці, за прогнозовані гроші, з усіма потрібними документами.</p>
+  </div>
+
+  <h3>Топ-5 болів</h3>
+  <div class="card">
+    <ul class="big-list">
+      <li><strong>Страх переробок і зростання ціни.</strong> «Боюся почати будувати, а потім полізуть переробки, і кошторис поповзе вгору. Я ж не закладав таких грошей.»</li>
+      <li><strong>Чи взагалі це можна збудувати на моїй ділянці.</strong> «А як намалюють красивий будинок, а на моїй ділянці його не поставити — ґрунти, рельєф, комунікації не дозволять?»</li>
+      <li><strong>Плутанина з дозволами.</strong> «Я заплутався: мені потрібен той будівельний паспорт, МБУ, геологія, чи можна без них? Ніхто нормально не пояснює.»</li>
+      <li><strong>Типовий проєкт чи індивідуальний.</strong> «Візьму готовий проєкт, бо дешевше. А раптом він не підійде під мою ділянку, і доведеться все переробляти — яка тоді економія?»</li>
+      <li><strong>Як проконтролювати будівництво.</strong> «Як я перевірю, що будівельники роблять по проєкту, а не як їм зручно? Я ж не інженер.»</li>
+    </ul>
+  </div>
+
+  <h3>Топ-5 бажань</h3>
+  <div class="card">
+    <ul class="big-list">
+      <li><strong>Побачити результат до фундаменту.</strong> «Хочу бачити, що саме отримаю, ще до того, як закладу перший блок. Щоб жодних сюрпризів потім.»</li>
+      <li><strong>Один прогнозований кошторис.</strong> «Хочу зрозуміти бюджет наперед і щоб ціна не стрибала посеред роботи.»</li>
+      <li><strong>Проєкт під мою ділянку і мій бюджет.</strong> «Хочу не абстрактний красивий будинок, а той, що реально стане на моїй ділянці й по кишені.»</li>
+      <li><strong>Щоб документи зробили за мене.</strong> «Хочу, щоб усі папери для будівництва й дозволів оформили під ключ, без беготні по інстанціях.»</li>
+      <li><strong>Щоб усе було узгоджено між собою.</strong> «Хочу, щоб архітектура, конструктив і інженерія не суперечили одне одному, і на будівництві не з'ясувалося, що щось не стикується.»</li>
+    </ul>
+  </div>
+
+  <h3>Головний страх</h3>
+  <div class="card">
+    <p>Найсильніший бар'єр перед покупкою — заплатити за проєкт, який або не вийде збудувати, або «потягне» ціну вгору на будівництві.</p>
+    <p><strong>Сам страх.</strong> «Віддам гроші за проєкт, а він виявиться нереалізовним або ціна на будівництві виросте в рази. Гроші на вітер, а я лишуся з красивими кресленнями і без будинку.»</p>
+    <p><strong>Внутрішній діалог.</strong> «Проєкт начебто гарний на картинці. Але хто гарантує, що його реально збудувати саме так, за ці гроші? Може, вони малюють красиво, а на майданчику все піде не так.»</p>
+    <p><strong>Причина недовіри.</strong> Ціну не показують наперед, різниця між ескізом і робочим проєктом незрозуміла, доказів (кейсів) мало. Людина не може заздалегідь оцінити ні бюджет, ні надійність виконавця.</p>
+    <p style="margin-bottom:0"><strong>Що допоможе подолати.</strong> Публічна стартова вартість і зрозумілі пакети; фіксація ціни в договорі; кейси у форматі «ділянка → обмеження → рішення → склад документації → строк → фото/3D»; пояснення, що саме входить в ескізний і робочий проєкт; гарантія узгодженості проєкту з нормами (ДБН) і прив'язки до реальної ділянки.</p>
+  </div>
+
+  <p class="sfoot">Соколов Олег · <a href="https://t.me/Sokil_65" target="_blank" rel="noopener noreferrer">@Sokil_65</a></p>
+</section>
+
+<!-- ░░░ РОЗДІЛ 4. ОФФЕРИ ░░░ -->
+<section class="section">
+  <span class="eyebrow">Пропозиція</span>
+  <h2 class="grad">Варіанти оффера</h2>
+  <p class="lede">Три готові варіанти першого екрана для сайту. Усі цифри — реальні умови ПГС-Проект.</p>
+
+  <div class="offer" style="margin-top:40px">
+    <div class="offer-tag">Варіант 1 · Бюджет і строк наперед</div>
+    <p class="offer-text">«Робочий проєкт будинку за 30 днів від 10 $/м². Ціна — в договорі».</p>
+    <ul>
+      <li>Без доплат посеред роботи — сума в договорі.</li>
+      <li>Без сюрпризів на ділянці — ґрунти й комунікації враховані.</li>
+      <li>Без розбіжностей між розділами — архітектура, конструктив, інженерія узгоджені.</li>
+    </ul>
+  </div>
+
+  <div class="offer">
+    <div class="offer-tag">Варіант 2 · Два строки: ескіз і проєкт</div>
+    <p class="offer-text">«Ескіз за 10 днів. Робочий проєкт за 30».</p>
+    <ul>
+      <li>Без очікування наосліп — знаєте, що й коли отримаєте.</li>
+      <li>Без переробок на будівництві — правки вносимо на ескізі.</li>
+      <li>Без зайвих місяців — вигляд дому вже за 10 днів.</li>
+    </ul>
+  </div>
+
+  <div class="offer">
+    <div class="offer-tag">Варіант 3 · Швидкий старт із прозорою ціною</div>
+    <p class="offer-text">«Ескіз за 10 днів. Проєкт від 10 $/м²».</p>
+    <ul>
+      <li>Без прихованих доплат — ціна зафіксована в договорі.</li>
+      <li>Без великого ризику на старті — починаєте з ескізу.</li>
+      <li>Без абстрактних картинок — проєкт під вашу ділянку.</li>
+    </ul>
+  </div>
+
+  <p class="sfoot">Соколов Олег · <a href="https://t.me/Sokil_65" target="_blank" rel="noopener noreferrer">@Sokil_65</a></p>
+</section>
+
+<!-- ░░░ РОЗДІЛ 5. ФІНАЛ ░░░ -->
+<section class="section" style="border:none">
+  <div class="final">
+    <p class="q">На якому варіанті оффера ми з вами зупиняємось?</p>
+    <p class="cta">Напишіть або зателефонуйте, щоб обговорити вибір: <a href="https://t.me/Sokil_65" target="_blank" rel="noopener noreferrer">@Sokil_65</a> · <a href="tel:+380991383775">+38 099 138 3775</a></p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
