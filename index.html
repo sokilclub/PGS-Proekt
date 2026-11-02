@@ -25,7 +25,7 @@
   --blue:#8FBEF0;
   --r:16px;
 
-  --f1:clamp(2.05rem, min(5.6vw, 8.4vh), 4.4rem);
+  --f1:clamp(2.3rem, min(6.3vw, 9.4vh), 4.9rem);
   --f2:clamp(1.36rem, min(2.6vw, 4.2vh), 2.1rem);
   --f3:clamp(1.08rem, min(1.55vw, 2.5vh), 1.5rem);
   --f4:clamp(1rem, min(1.2vw, 2vh), 1.15rem);
@@ -132,8 +132,8 @@ body{
 h1{
   font-family:'Fraunces',Georgia,serif;
   font-size:var(--f1);font-weight:600;
-  line-height:1.04;letter-spacing:-.022em;
-  max-width:17ch;
+  line-height:1.08;letter-spacing:-.022em;
+  max-width:24ch;
   font-variation-settings:'SOFT' 24,'opsz' 120;
 }
 h1 em{font-style:normal;color:var(--mint)}
@@ -157,6 +157,7 @@ h1 em{font-style:normal;color:var(--mint)}
 .perk svg{width:clamp(20px,2.4vh,28px);height:auto;stroke:var(--mint);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .perk b{font-size:var(--f4);font-weight:600;line-height:1.25;display:block}
 .perk small{font-size:var(--f5);color:var(--dim);line-height:1.35;display:block;margin-top:2px}
+.perk-plus{display:block;font-size:var(--f5);color:var(--mint);font-weight:600;line-height:1.3;margin-top:6px}
 
 .cta-zone{display:flex;flex-direction:column;align-items:center;gap:calc(var(--sp)*.5);margin-top:2px;width:100%}
 
@@ -347,29 +348,31 @@ h1 em{font-style:normal;color:var(--mint)}
 .dial-wrap{display:flex;flex-direction:column;align-items:center;gap:calc(var(--sp)*.5)}
 .dial{
   position:relative;
-  width:clamp(190px,28vw,300px);aspect-ratio:1/1;
-  border-radius:50%;
-  border:3px solid transparent;
+  width:100%;max-width:440px;
+  border-radius:22px;
+  border:2px solid transparent;
   background:
-    radial-gradient(circle at 32% 26%, rgba(91,163,232,.24), transparent 60%) padding-box,
-    radial-gradient(circle at 72% 76%, rgba(251,138,60,.20), transparent 55%) padding-box,
+    radial-gradient(90% 130% at 12% 0%, rgba(91,163,232,.22), transparent 60%) padding-box,
+    radial-gradient(90% 130% at 100% 100%, rgba(251,138,60,.17), transparent 55%) padding-box,
     var(--surf) padding-box,
     linear-gradient(135deg, var(--mint), var(--apricot)) border-box;
   display:grid;place-items:center;
+  padding:clamp(28px,5.2vh,50px) clamp(20px,4vw,40px);
   animation:dialGlow 3s ease-in-out infinite;
 }
 @keyframes dialGlow{
   0%,100%{box-shadow:0 0 30px -8px rgba(91,163,232,.4)}
   50%{box-shadow:0 0 48px -6px rgba(91,163,232,.6)}
 }
-.dial-core{text-align:center;padding:0 10%}
+.dial-core{text-align:center;padding:0 6%}
 .dial-n{
   font-family:'Instrument Sans',system-ui,sans-serif;font-weight:700;
-  font-size:clamp(1.7rem, min(4vw, 6.2vh), 2.9rem);
-  line-height:.98;letter-spacing:-.02em;
+  font-size:clamp(2.9rem, min(8vw, 11vh), 5.2rem);
+  line-height:.96;letter-spacing:-.024em;
   font-variant-numeric:tabular-nums;
+  text-shadow:0 0 30px rgba(91,163,232,.3);
 }
-.dial-u{font-size:var(--f4);color:var(--apricot);font-weight:700;margin-top:.2em}
+.dial-u{font-size:var(--f2);color:var(--apricot);font-weight:700;margin-top:.1em;letter-spacing:.03em}
 .dial-c{font-size:var(--f5);color:var(--dim);margin-top:.5em;line-height:1.3}
 
 .res-name{
@@ -377,7 +380,12 @@ h1 em{font-style:normal;color:var(--mint)}
   font-weight:600;text-align:center;line-height:1.25;
 }
 .res-name span{color:var(--mint)}
-.dial-note{font-size:var(--f5);color:var(--dim);text-align:center;margin-top:-.2em}
+.dial-rate{text-align:center;font-size:var(--f4);color:var(--bone);font-weight:600;margin-top:-.1em}
+.dial-rate b{color:var(--apricot);font-weight:700}
+.dial-rate small{display:block;font-size:var(--f5);color:var(--dim);font-weight:500;margin-top:.25em}
+.bnote{flex-basis:100%;font-size:var(--f5);color:#7E93B0;margin-top:.5em;line-height:1.4}
+.restart{align-self:flex-start;font-family:inherit;font-size:var(--f5);font-weight:600;color:var(--dim);background:var(--surf);border:1px solid var(--line);border-radius:100px;padding:.55em 1.2em;cursor:pointer;transition:.18s}
+.restart:hover{color:var(--bone);border-color:var(--mint)}
 
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .st{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:clamp(12px,1.8vh,18px)}
@@ -422,12 +430,12 @@ input[type=number]{-moz-appearance:textfield}
 /* ═══════════ RESPONSIVE ═══════════ */
 @media(max-width:860px){
   .res{grid-template-columns:1fr;gap:clamp(14px,2.4vh,22px)}
-  .dial{width:clamp(150px,42vw,230px)}
+  .dial{max-width:420px}
   .perks{gap:8px}
   .perk{padding:11px 8px;gap:.4em}
 }
 @media(max-width:560px){
-  h1{max-width:100%}
+  h1{max-width:100%;font-size:clamp(1.8rem,min(8.2vw,5.5vh),2.9rem)}
   .lede{max-width:36ch;margin-inline:auto}
   .perks{grid-template-columns:1fr;gap:8px}
   .perk{flex-direction:row;align-items:center;text-align:left;gap:12px;padding:13px 16px}
@@ -463,20 +471,20 @@ input[type=number]{-moz-appearance:textfield}
   .perk svg{width:16px;height:16px;flex:none}
   .perk div{flex:none}
   .perk b{font-size:var(--f5)}
-  .perk small{display:none}
+  .perk small,.perk-plus{display:none}
 }
 @media(max-height:420px){
   .perks{display:none}
 }
 @media(max-height:560px){
-  h1{font-size:clamp(1.7rem, min(5.6vw, 7vh), 4.4rem)}
+  h1{font-size:clamp(1.9rem, min(6.3vw, 7.8vh), 4.9rem)}
 }
 @media(orientation:landscape) and (max-height:560px){
   .hero{max-width:min(860px,94vw)}
   .lede{max-width:54ch;margin-inline:auto}
   .sheet{max-height:95dvh}
-  .res{grid-template-columns:.75fr 1.25fr}
-  .dial{width:clamp(130px,20vw,190px)}
+  .res{grid-template-columns:.9fr 1.1fr}
+  .dial{max-width:340px}
 }
 </style>
 </head>
@@ -488,27 +496,26 @@ input[type=number]{-moz-appearance:textfield}
   <div class="hero">
     <div class="gift"><span class="g-ico">🎁</span><span>Безкоштовна консультація <b>в&nbsp;подарунок</b></span></div>
 
-    <h1>Скільки коштує проєкт <em>вашого&nbsp;будинку</em>?</h1>
+    <h1>Скільки коштує проєкт<br><em>вашого&nbsp;будинку</em>?</h1>
 
     <p class="lede">За&nbsp;2&nbsp;хвилини отримаєте орієнтовну вартість проєкту вашого будинку — у гривнях і в доларах за м², безкоштовно.</p>
 
     <div class="cta-zone">
       <button class="btn" id="go">Розрахувати вартість</button>
-      <p class="note">На ринку з&nbsp;2006 року · <b>650+</b> виконаних проєктів</p>
     </div>
 
     <div class="perks">
       <div class="perk">
         <svg viewBox="0 0 24 24"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-7h6v7"/></svg>
-        <div><b>20 років досвіду</b><small>на ринку з 2006, 650+ проєктів</small></div>
+        <div><b>20 років досвіду</b><small>на ринку з 2006, 650+ проєктів</small><span class="perk-plus">Будинки, реконструкція, комерція</span></div>
       </div>
       <div class="perk">
         <svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="4"/></svg>
-        <div><b>Ставка від 7 $/м²</b><small>прозора ціна, порівняйте з ринком</small></div>
+        <div><b>Ставка від 7 $/м²</b><small>прозора ціна, порівняйте з ринком</small><span class="perk-plus">Ціна фіксується в договорі</span></div>
       </div>
       <div class="perk">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        <div><b>Результат за 2 хвилини</b><small>без реєстрації і дзвінків</small></div>
+        <div><b>Результат за 2 хвилини</b><small>без реєстрації і дзвінків</small><span class="perk-plus">Без жодних зобов'язань</span></div>
       </div>
     </div>
   </div>
@@ -518,38 +525,32 @@ input[type=number]{-moz-appearance:textfield}
 <section class="screen" id="scRes">
   <div class="res-wrap">
 
+    <button class="restart" id="restart" type="button">↺ Порахувати ще раз</button>
+
     <div class="res">
       <div class="dial-wrap">
         <div class="dial">
           <div class="dial-core">
             <div class="dial-n" id="oCost">0</div>
-            <div class="dial-u">₴</div>
+            <div class="dial-u">грн</div>
             <div class="dial-c">орієнтовна вартість проєкту</div>
           </div>
         </div>
         <div class="res-name"><span id="oName"></span>, ось ваш розрахунок</div>
-        <div class="dial-note">Точна ціна фіксується в договорі</div>
+        <div class="dial-rate">≈ <b id="oRate">—</b> $ за м²</div>
       </div>
 
       <div>
-        <div class="stats">
-          <div class="st"><div class="st-l">Ставка за м²</div><div class="st-v" id="oRate">—</div><div class="st-s">орієнтовно</div></div>
-          <div class="st"><div class="st-l">Строк проєкту</div><div class="st-v">14–30</div><div class="st-s">днів</div></div>
-          <div class="st"><div class="st-l">Документи</div><div class="st-v" id="oDoc">—</div><div class="st-s" id="oDocS">—</div></div>
-        </div>
-
         <div class="panel">
-          <div class="ph"><span>Що входить у проєкт</span><b id="oDiv">—</b></div>
+          <div class="ph"><span>Склад проєкту</span><b id="oDiv">—</b></div>
           <div class="mac" id="incBar"></div>
           <div class="mac-lg" id="incLeg"></div>
 
           <div class="combo-div"></div>
 
-          <div class="ph"><span>Строки виконання</span><b>поетапно</b></div>
-          <div class="mac-lg">
-            <span><i style="background:var(--blue)"></i>Ескіз <b>~10 днів</b></span>
-            <span><i style="background:var(--apricot)"></i>Робочий проєкт <b>14–30 днів</b></span>
-          </div>
+          <div class="ph"><span>Як зростає ціна</span><b id="oGrowTot">—</b></div>
+          <div class="mac" id="growBar"></div>
+          <div class="mac-lg" id="growLeg"></div>
         </div>
       </div>
     </div>
@@ -558,7 +559,7 @@ input[type=number]{-moz-appearance:textfield}
       <div class="cta-hero-ico">🎁</div>
       <div class="cta-hero-t">
         <strong>Безкоштовна консультація</strong>
-        <small>На консультації розберемо ваш розрахунок, уточнимо ціну під вашу ділянку й відповімо, що входить у проєкт і скільки це займе.</small>
+        <small>Уточнимо точну ціну під вашу ділянку й склад проєкту.</small>
       </div>
       <div class="cta-act">
         <span class="free">Безкоштовно</span>
@@ -662,6 +663,16 @@ $('#closeQ').addEventListener('click',closeQ);
 $('#veil').addEventListener('click',e=>{if(e.target===$('#veil'))closeQ()});
 $$('.bk').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.b)));
 
+function reset(){
+  for(const k in D)delete D[k];
+  $$('.opt').forEach(o=>o.classList.remove('sel'));
+  $$('.inp').forEach(i=>{i.value='';i.classList.remove('bad')});
+  go(1);
+  $('#scRes').classList.remove('on');
+  $('#scHero').classList.add('on');
+}
+$('#restart').addEventListener('click',reset);
+
 function choice(s,k,nx){
   $$(`.step[data-s="${s}"] .opt`).forEach(b=>b.addEventListener('click',function(){
     $$(`.step[data-s="${s}"] .opt`).forEach(x=>x.classList.remove('sel'));
@@ -698,47 +709,56 @@ function render(){
   const projUSD = area*rateUSD;                 // проєкт, $
   const docsUSD = docs==='yes' ? 300*cplx : 0;  // схема намірів забудови, $
   const totalUSD = projUSD + docsUSD;
-  let totalUAH = Math.round(totalUSD*ERATE/100)*100;   // до сотень ₴
-  const docsUAH = Math.round(docsUSD*ERATE/100)*100;
+  const totalUAH = Math.round(totalUSD*ERATE/100)*100;   // до сотень грн
+  const uah = u => Math.round(u*ERATE/100)*100;
 
   closeQ();
   $('#scHero').classList.remove('on');
   $('#scRes').classList.add('on');
 
-  $('#oName').textContent=name.split(' ')[0];
-  $('#oRate').textContent=rateUSD.toFixed(1).replace('.',',')+' $';
-  if(docs==='yes'){
-    $('#oDoc').textContent='Так';
-    $('#oDocS').textContent='+ '+fmt(docsUAH)+' ₴';
-  }else{
-    $('#oDoc').textContent='—';
-    $('#oDocS').textContent='не потрібні';
-  }
+  const raw = name.split(' ')[0];
+  $('#oName').textContent = raw.charAt(0).toLocaleUpperCase('uk') + raw.slice(1);
+  $('#oRate').textContent = rateUSD.toFixed(1).replace('.',',');
 
-  // Що входить у проєкт — розділи
-  const parts=[
-    ['Архітектурний','var(--mint)'],
-    ['Конструктивний','var(--apricot)'],
-    ['Інженерний','var(--blue)']
+  // розкладає суму на частини так, щоб їх сума точно дорівнювала total (різницю додає найбільшій)
+  const splitUAH=(arr,total)=>{
+    const v=arr.map(p=>uah(p[1]));
+    let mi=0; v.forEach((x,i)=>{if(x>v[mi])mi=i});
+    v[mi]+=total - v.reduce((a,b)=>a+b,0);
+    return v;
+  };
+
+  // ── стрічка 1: склад проєкту (розділи за назвою, без вигаданих часток) ──
+  const dist=[
+    ['Архітектурний розділ','var(--mint)'],
+    ['Конструктивний розділ','var(--apricot)'],
+    ['Інженерний розділ','var(--blue)']
   ];
-  if(docs==='yes')parts.push(['Дозвільні документи','var(--warn)']);
-  $('#oDiv').textContent=parts.length+' розділи';
-  $('#incBar').innerHTML=parts.map(p=>`<i style="flex:1;background:${p[1]}"></i>`).join('');
-  $('#incLeg').innerHTML=parts.map(p=>`<span><i style="background:${p[1]}"></i>${p[0]}</span>`).join('');
+  if(docs==='yes')dist.push(['Дозвільні документи','var(--warn)']);
+  $('#oDiv').textContent = docs==='yes' ? '3 розділи + документи' : '3 розділи';
+  $('#incBar').innerHTML=dist.map(p=>`<i style="flex:1;background:${p[1]}"></i>`).join('');
+  $('#incLeg').innerHTML=dist.map(p=>`<span><i style="background:${p[1]}"></i>${p[0]}</span>`).join('');
+
+  // ── стрічка 2: як зростає ціна (з чого складається сума) ──
+  const baseUSD=area*7, floorAddUSD=area*7*(floor-1), cplxAddUSD=area*7*floor*(cplx-1);
+  const grow=[['Базова ставка 7 $/м²', baseUSD, 'var(--blue)']];
+  if(floorAddUSD>0.5)grow.push(['За поверховість', floorAddUSD, 'var(--mint)']);
+  if(cplxAddUSD>0.5)grow.push(['За складність', cplxAddUSD, 'var(--apricot)']);
+  if(docsUSD>0)grow.push(['Документи', docsUSD, 'var(--warn)']);
+  const growV=splitUAH(grow,totalUAH);
+  $('#oGrowTot').textContent=fmt(totalUAH)+' грн';
+  $('#growBar').innerHTML=grow.map((p,i)=>`<i style="flex:${Math.max(1,growV[i])};background:${p[2]}"></i>`).join('');
+  $('#growLeg').innerHTML=grow.map((p,i)=>`<span><i style="background:${p[2]}"></i>${p[0]} <b>${i===0?'':'+ '}${fmt(growV[i])} грн</b></span>`).join('');
 
   // лічильник головної цифри
   const el=$('#oCost'); let n=0, st=Math.ceil(totalUAH/36);
   const iv=setInterval(()=>{n+=st; if(n>=totalUAH){n=totalUAH;clearInterval(iv)} el.textContent=n.toLocaleString('uk-UA')},30);
 
-  requestAnimationFrame(()=>{
-    $$('#incBar > i').forEach(i=>i.style.flex='1');
-  });
-
   // персональні висновки
   const floorWord = floor>=1.15?'двоповерховий':floor>=1.1?'з мансардою':'одноповерховий';
   const cplxWord = cplx>=1.35?'складну':cplx>=1.15?'середню':'просту';
   const ins=[
-    ['🏠',`Для будинку <b>${fmt(area)} м²</b> (${floorWord}) орієнтовна вартість проєкту — <b>${fmt(totalUAH)} ₴</b>. Точну суму зафіксуємо в договорі після консультації.`],
+    ['🏠',`Для будинку <b>${fmt(area)} м²</b> (${floorWord}) орієнтовна вартість проєкту — <b>${fmt(totalUAH)} грн</b> (≈ ${rateUSD.toFixed(1).replace('.',',')} $ за м²).`],
     ['📐',`Ви обрали <b>${cplxWord} форму</b> — вона впливає на ставку за м². На консультації підкажемо, як оптимізувати проєкт під ваш бюджет.`],
     docs==='yes'
       ? ['📄',`Для старту потрібна <b>схема намірів забудови</b> — підготуємо її теж (від 300 $). Сам будівельний паспорт видає ДАБІ.`]
