@@ -297,7 +297,7 @@ h1 em{font-style:normal;color:var(--mint)}
 
 /* ═══════════ RESULTS ═══════════ */
 .res-wrap{
-  width:100%;max-width:min(1000px,94vw);
+  width:100%;max-width:min(560px,94vw);
   max-height:100%;overflow-y:auto;overscroll-behavior:contain;
   -webkit-overflow-scrolling:touch;scrollbar-width:none;
   display:flex;flex-direction:column;gap:clamp(14px,2.2vh,20px);
@@ -341,14 +341,14 @@ h1 em{font-style:normal;color:var(--mint)}
 
 .res{
   width:100%;
-  display:grid;grid-template-columns:.8fr 1.2fr;
-  gap:clamp(20px,3.5vw,56px);align-items:center;
+  display:grid;grid-template-columns:1fr;
+  gap:clamp(14px,2.2vh,20px);
 }
 
 .dial-wrap{display:flex;flex-direction:column;align-items:center;gap:calc(var(--sp)*.5)}
 .dial{
   position:relative;
-  width:100%;max-width:440px;
+  width:100%;max-width:100%;
   border-radius:22px;
   border:2px solid transparent;
   background:
@@ -430,7 +430,7 @@ input[type=number]{-moz-appearance:textfield}
 /* ═══════════ RESPONSIVE ═══════════ */
 @media(max-width:860px){
   .res{grid-template-columns:1fr;gap:clamp(14px,2.4vh,22px)}
-  .dial{max-width:420px}
+  .dial{max-width:100%}
   .perks{gap:8px}
   .perk{padding:11px 8px;gap:.4em}
 }
@@ -483,8 +483,8 @@ input[type=number]{-moz-appearance:textfield}
   .hero{max-width:min(860px,94vw)}
   .lede{max-width:54ch;margin-inline:auto}
   .sheet{max-height:95dvh}
-  .res{grid-template-columns:.9fr 1.1fr}
-  .dial{max-width:340px}
+  .res{grid-template-columns:1fr}
+  .dial{max-width:100%}
 }
 </style>
 </head>
