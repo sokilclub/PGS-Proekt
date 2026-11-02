@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A1420">
+<meta name="color-scheme" content="dark">
+<title>Калькулятор вартості проєкту будинку · ПГС-Проект</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ink:#0A1420;
+  --surf:#122133;
+  --surf2:#1B2E45;
+  --line:#2C4463;
+  --bone:#EDF2F9;
+  --dim:#9FB2CB;
+  --mint:#5BA3E8;     /* акцент даних — фірмовий синій ПГС */
+  --apricot:#FB8A3C;  /* акцент дії (кнопки, кільце) — фірмовий помаранчевий */
+  --warn:#FF8F6B;
+  --blue:#8FBEF0;
+  --r:16px;
+
+  --f1:clamp(2.05rem, min(5.6vw, 8.4vh), 4.4rem);
+  --f2:clamp(1.36rem, min(2.6vw, 4.2vh), 2.1rem);
+  --f3:clamp(1.08rem, min(1.55vw, 2.5vh), 1.5rem);
+  --f4:clamp(1rem, min(1.2vw, 2vh), 1.15rem);
+  --f5:clamp(.88rem, min(1vw, 1.7vh), .98rem);
+
+  --sp:clamp(16px, 2.6vh, 26px);
+}
+
+html{
+  -webkit-text-size-adjust:100%;
+  color-scheme:dark;
+  background:#0A1420;
+  background-color:var(--ink);
+  min-height:100%;
+}
+body{
+  font-family:'Instrument Sans',system-ui,sans-serif;
+  background:#0A1420;
+  background-color:var(--ink);
+  color:var(--bone);
+  height:100dvh;overflow:hidden;line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+.page-bg{
+  position:fixed;inset:-2px;z-index:-2;pointer-events:none;
+  background:#0A1420;
+  background-color:var(--ink);
+}
+.page-bg::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(120vmin 90vmin at 50% -20%, rgba(91,163,232,.14), transparent 65%),
+    radial-gradient(90vmin 70vmin at 100% 110%, rgba(251,138,60,.09), transparent 60%);
+}
+
+.screen{
+  position:fixed;inset:0;display:none;place-items:center;
+  padding:max(18px,3vh) max(20px,4vw);
+  padding-top:max(18px,3vh,env(safe-area-inset-top));
+  padding-bottom:max(18px,3vh,env(safe-area-inset-bottom));
+}
+.screen.on{display:grid}
+
+/* ═══════════ HERO ═══════════ */
+.hero{
+  width:100%;max-width:min(920px,88vw);
+  max-height:100%;overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+  gap:var(--sp);
+  padding:4px 2px;
+}
+.hero::-webkit-scrollbar{display:none}
+
+.tag{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:var(--f5);font-weight:600;color:var(--mint);
+  background:rgba(91,163,232,.09);
+  border:1px solid rgba(91,163,232,.22);
+  border-radius:100px;padding:.55em 1.25em;
+  margin-bottom:2px;
+}
+.tag .dot{
+  width:7px;height:7px;border-radius:50%;background:var(--mint);
+  animation:blip 2.4s infinite;
+}
+@keyframes blip{0%{box-shadow:0 0 0 0 rgba(91,163,232,.55)}70%{box-shadow:0 0 0 8px rgba(91,163,232,0)}100%{box-shadow:0 0 0 0 rgba(91,163,232,0)}}
+
+/* ═══ GIFT — безкоштовна консультація. Поза .perks навмисно:
+   perks можуть стискатись/ховатись на низьких екранах, цей бейдж — ніколи. ═══ */
+.gift{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  max-width:92%;text-align:center;
+  font-size:var(--f5);font-weight:600;color:var(--bone);
+  background:rgba(251,138,60,.14);
+  border:1.5px solid rgba(251,138,60,.4);
+  border-radius:20px;padding:.85em 1.5em;
+  margin-bottom:2px;
+  animation:giftGlowShadow 2.6s ease-in-out infinite;
+}
+@keyframes giftGlowShadow{
+  0%,100%{box-shadow:0 0 0 0 rgba(251,138,60,0)}
+  50%{box-shadow:0 0 28px -6px rgba(251,138,60,.55)}
+}
+.gift .g-ico{font-size:1.5em;line-height:1}
+.gift b{color:var(--apricot);font-weight:700}
+.gift > span:last-child{min-width:0}
+.gift:not(.gift-sm) > span:last-child{max-width:32ch}
+.gift-sm{
+  flex-direction:row;gap:9px;
+  align-self:center;
+  margin:12px auto 0;
+  padding:.55em 1.1em;
+  border-radius:100px;
+  animation:giftGlowColor 2.6s ease-in-out infinite;
+}
+@keyframes giftGlowColor{
+  0%,100%{background:rgba(251,138,60,.14);border-color:rgba(251,138,60,.4)}
+  50%{background:rgba(251,138,60,.28);border-color:rgba(251,138,60,.75)}
+}
+.gift-sm .g-ico{font-size:1.2em}
+
+h1{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:var(--f1);font-weight:600;
+  line-height:1.04;letter-spacing:-.022em;
+  max-width:17ch;
+  font-variation-settings:'SOFT' 24,'opsz' 120;
+}
+h1 em{font-style:normal;color:var(--mint)}
+
+.lede{
+  font-size:var(--f3);color:var(--dim);
+  max-width:48ch;line-height:1.5;
+}
+
+.perks{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(8px,1.4vw,14px);width:100%;
+}
+.perk{
+  background:var(--surf);border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:clamp(12px,1.9vh,22px) clamp(10px,1.4vw,18px);
+  display:flex;flex-direction:column;align-items:center;gap:.55em;
+  text-align:center;
+}
+.perk svg{width:clamp(20px,2.4vh,28px);height:auto;stroke:var(--mint);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.perk b{font-size:var(--f4);font-weight:600;line-height:1.25;display:block}
+.perk small{font-size:var(--f5);color:var(--dim);line-height:1.35;display:block;margin-top:2px}
+
+.cta-zone{display:flex;flex-direction:column;align-items:center;gap:calc(var(--sp)*.5);margin-top:2px;width:100%}
+
+.btn{
+  font-family:inherit;font-size:var(--f3);font-weight:700;
+  color:#0A1420;-webkit-appearance:none;appearance:none;
+  background:linear-gradient(180deg,#FFB76E,#F5821E);
+  border:none;border-radius:100px;
+  padding:.95em 2.5em;cursor:pointer;
+  max-width:100%;text-decoration:none;display:inline-block;text-align:center;
+  box-shadow:0 .7em 2.4em -.7em rgba(251,138,60,.7), inset 0 1px 0 rgba(255,255,255,.4);
+  transition:transform .2s, box-shadow .2s, filter .2s;
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05);box-shadow:0 1em 3em -.7em rgba(251,138,60,.85), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:active{transform:translateY(0)}
+
+@keyframes ctaPulse{
+  0%,100%{box-shadow:0 .7em 2.4em -.7em rgba(251,138,60,.7), inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 0 rgba(251,138,60,.45)}
+  50%{box-shadow:0 .9em 2.8em -.6em rgba(251,138,60,.9), inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 12px rgba(251,138,60,0)}
+}
+#go{
+  padding:1em 2.6em;
+  animation:ctaPulse 2.6s ease-in-out infinite;
+}
+#go:hover{animation-play-state:paused}
+
+.note{font-size:var(--f5);color:var(--dim)}
+.note b{color:var(--bone);font-weight:600}
+
+/* ═══════════ SHEET ═══════════ */
+.veil{
+  position:fixed;inset:0;z-index:60;display:none;
+  background:rgba(5,10,18,.80);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  place-items:center;padding:max(12px,2vh) max(14px,3vw);
+}
+.veil.on{display:grid}
+
+.sheet{
+  width:100%;max-width:520px;max-height:min(94dvh,820px);
+  background:var(--surf);border:1px solid var(--line);
+  border-radius:clamp(18px,2.6vh,24px);
+  box-shadow:0 40px 100px -25px rgba(0,0,0,.8);
+  display:flex;flex-direction:column;overflow:hidden;
+  animation:rise .32s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes rise{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+
+.stop{
+  display:flex;align-items:center;gap:14px;flex:none;
+  padding:clamp(14px,2vh,20px) clamp(18px,2.6vw,28px);
+  border-bottom:1px solid var(--line);
+}
+.ruler{flex:1;height:20px}
+.ruler svg{width:100%;height:100%;display:block}
+.ruler .rt{stroke:#2C4463;stroke-width:2;stroke-linecap:round}
+.ruler .rf{stroke:var(--mint);stroke-width:2;stroke-linecap:round}
+.snum{font-size:var(--f5);font-weight:700;color:var(--dim);font-variant-numeric:tabular-nums}
+.x{
+  flex:none;width:34px;height:34px;border-radius:10px;
+  border:1px solid var(--line);background:transparent;
+  color:var(--dim);font-size:1rem;cursor:pointer;
+  display:grid;place-items:center;transition:.2s;
+}
+.x:hover{background:var(--surf2);color:var(--bone)}
+
+.sbody{padding:clamp(20px,3vh,30px) clamp(18px,2.6vw,28px) clamp(22px,3vh,30px);overflow-y:auto;flex:1}
+
+.step{display:none}
+.step.on{display:block;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.q{
+  font-family:'Fraunces',serif;font-size:var(--f2);font-weight:600;
+  line-height:1.15;letter-spacing:-.015em;margin-bottom:clamp(16px,2.4vh,24px);
+}
+
+.opts{display:grid;gap:10px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  background:var(--surf2);border:1.5px solid transparent;
+  border-radius:var(--r);
+  padding:clamp(13px,1.8vh,18px) clamp(14px,1.6vw,18px);
+  cursor:pointer;text-align:left;font-family:inherit;color:var(--bone);
+  transition:border-color .18s,background .18s,transform .12s;
+}
+.opt:hover{border-color:rgba(91,163,232,.4);background:#21395A}
+.opt:active{transform:scale(.99)}
+.opt.sel{border-color:var(--mint);background:rgba(91,163,232,.12)}
+.opt-i{
+  width:2.4em;height:2.4em;flex:none;border-radius:11px;
+  background:rgba(91,163,232,.1);display:grid;place-items:center;
+  font-size:var(--f4);
+}
+.opt-t{font-size:var(--f4);font-weight:600;line-height:1.25;display:block}
+.opt-d{font-size:var(--f5);color:var(--dim);margin-top:2px;display:block}
+
+.fld{margin-bottom:14px}
+.fld label{display:block;font-size:var(--f5);font-weight:600;color:var(--dim);margin-bottom:7px}
+.fw{position:relative}
+.inp{
+  width:100%;background:var(--surf2);
+  border:1.5px solid var(--line);border-radius:var(--r);
+  padding:.85em 3.4em .85em 1em;
+  font-family:inherit;font-size:var(--f3);font-weight:600;
+  color:var(--bone);outline:none;transition:.18s;
+  font-variant-numeric:tabular-nums;
+}
+.inp::placeholder{color:#64789A;font-weight:400}
+.inp:focus{border-color:var(--mint);background:#21395A}
+.inp.bad{border-color:var(--warn)}
+.suf{position:absolute;right:1.1em;top:50%;transform:translateY(-50%);font-size:var(--f5);color:var(--dim);pointer-events:none;font-weight:500}
+.pre{position:absolute;left:1em;top:50%;transform:translateY(-50%);font-size:var(--f3);color:var(--dim);pointer-events:none;font-weight:600}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.duo .fld{margin-bottom:0}
+
+.nav{display:flex;gap:10px;margin-top:clamp(16px,2.4vh,24px)}
+.bk{
+  flex:none;width:3.2em;border-radius:var(--r);
+  border:1.5px solid var(--line);background:transparent;
+  color:var(--dim);font-size:var(--f4);cursor:pointer;transition:.18s;
+}
+.bk:hover{background:var(--surf2);color:var(--bone)}
+.fwd{
+  flex:1;border:none;border-radius:var(--r);
+  background:linear-gradient(180deg,#FFB76E,#F5821E);
+  color:#0A1420;font-family:inherit;font-size:var(--f4);font-weight:700;
+  padding:.95em;cursor:pointer;transition:.18s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+}
+.fwd:hover{filter:brightness(1.06)}
+
+.lhead{text-align:center;margin-bottom:clamp(16px,2.4vh,24px)}
+.lhead .q{margin-bottom:.35em}
+.lhead p{font-size:var(--f5);color:var(--dim)}
+.fine{font-size:var(--f5);color:#7E93B0;text-align:center;margin-top:1em}
+
+/* ═══════════ RESULTS ═══════════ */
+.res-wrap{
+  width:100%;max-width:min(1000px,94vw);
+  max-height:100%;overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  display:flex;flex-direction:column;gap:clamp(14px,2.2vh,20px);
+  padding:2px 2px;
+}
+.res-wrap::-webkit-scrollbar{display:none}
+
+.cta-hero{
+  width:100%;
+  background:linear-gradient(120deg,rgba(251,138,60,.22),rgba(251,138,60,.08));
+  border:1.5px solid rgba(251,138,60,.45);border-radius:var(--r);
+  padding:clamp(18px,2.6vh,26px) clamp(20px,2.8vw,30px);
+  box-shadow:0 .5em 2em -.8em rgba(251,138,60,.5);
+  display:flex;align-items:center;gap:clamp(14px,1.8vw,22px);flex-wrap:wrap;
+}
+.cta-hero-ico{
+  width:clamp(44px,6vh,58px);height:clamp(44px,6vh,58px);flex:none;
+  border-radius:50%;
+  background:rgba(251,138,60,.2);
+  border:1px solid rgba(251,138,60,.4);
+  display:grid;place-items:center;
+  font-size:clamp(1.3rem,2.8vh,1.7rem);
+}
+.cta-hero-t{flex:1;min-width:200px}
+.cta-hero-t strong{display:block;font-size:var(--f2);font-weight:700;line-height:1.25}
+.cta-hero-t small{display:block;font-size:var(--f4);color:var(--dim);margin-top:.4em;line-height:1.4}
+.cta-act{display:flex;flex-direction:column;align-items:center;gap:7px;flex:none}
+.free{font-size:var(--f5);font-weight:700;color:var(--apricot);text-transform:uppercase;letter-spacing:.09em}
+.cta-hero .btn{padding:.9em 2em;font-size:var(--f4);box-shadow:0 .4em 1.4em -.4em rgba(251,138,60,.6),inset 0 1px 0 rgba(255,255,255,.35)}
+@media(min-width:861px){
+  .cta-hero .btn{padding:1.05em 2.6em;font-size:var(--f3)}
+}
+
+.insights{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:clamp(14px,2vh,20px) clamp(16px,2.2vw,22px)}
+.insights-h{font-size:var(--f5);color:var(--dim);margin-bottom:.7em;font-weight:600}
+.ins{display:flex;gap:12px;padding:.55em 0}
+.ins+.ins{border-top:1px solid var(--line)}
+.ins i{width:2em;height:2em;flex:none;border-radius:9px;background:rgba(91,163,232,.1);display:grid;place-items:center;font-style:normal;font-size:var(--f4)}
+.ins p{font-size:var(--f5);color:var(--dim);line-height:1.5;align-self:center}
+.ins p b{color:var(--bone);font-weight:600}
+
+.res{
+  width:100%;
+  display:grid;grid-template-columns:.8fr 1.2fr;
+  gap:clamp(20px,3.5vw,56px);align-items:center;
+}
+
+.dial-wrap{display:flex;flex-direction:column;align-items:center;gap:calc(var(--sp)*.5)}
+.dial{
+  position:relative;
+  width:clamp(190px,28vw,300px);aspect-ratio:1/1;
+  border-radius:50%;
+  border:3px solid transparent;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(91,163,232,.24), transparent 60%) padding-box,
+    radial-gradient(circle at 72% 76%, rgba(251,138,60,.20), transparent 55%) padding-box,
+    var(--surf) padding-box,
+    linear-gradient(135deg, var(--mint), var(--apricot)) border-box;
+  display:grid;place-items:center;
+  animation:dialGlow 3s ease-in-out infinite;
+}
+@keyframes dialGlow{
+  0%,100%{box-shadow:0 0 30px -8px rgba(91,163,232,.4)}
+  50%{box-shadow:0 0 48px -6px rgba(91,163,232,.6)}
+}
+.dial-core{text-align:center;padding:0 10%}
+.dial-n{
+  font-family:'Instrument Sans',system-ui,sans-serif;font-weight:700;
+  font-size:clamp(1.7rem, min(4vw, 6.2vh), 2.9rem);
+  line-height:.98;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;
+}
+.dial-u{font-size:var(--f4);color:var(--apricot);font-weight:700;margin-top:.2em}
+.dial-c{font-size:var(--f5);color:var(--dim);margin-top:.5em;line-height:1.3}
+
+.res-name{
+  font-family:'Fraunces',serif;font-size:var(--f3);
+  font-weight:600;text-align:center;line-height:1.25;
+}
+.res-name span{color:var(--mint)}
+.dial-note{font-size:var(--f5);color:var(--dim);text-align:center;margin-top:-.2em}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.st{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:clamp(12px,1.8vh,18px)}
+.st-l{font-size:var(--f5);color:var(--dim);margin-bottom:.4em}
+.st-v{
+  font-family:'Instrument Sans',system-ui,sans-serif;font-weight:700;
+  font-size:clamp(1.15rem, min(2.1vw, 3.4vh), 1.85rem);
+  line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums;
+}
+.st-s{font-size:var(--f5);color:var(--dim);margin-top:.45em}
+
+.panel{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:clamp(13px,1.9vh,19px);margin-top:10px}
+.ph{display:flex;justify-content:space-between;align-items:baseline;font-size:var(--f5);color:var(--dim);margin-bottom:.8em}
+.ph b{color:var(--bone);font-weight:600}
+
+.combo-div{height:1px;background:var(--line);margin:.9em 0}
+
+.mac{display:flex;height:10px;gap:3px;margin-bottom:.8em}
+.mac>i{border-radius:5px;transition:flex 1.1s ease}
+.mac-lg{display:flex;gap:clamp(10px,1.8vw,22px);flex-wrap:wrap}
+.mac-lg span{display:flex;align-items:center;gap:7px;font-size:var(--f5);color:var(--dim)}
+.mac-lg i{width:8px;height:8px;border-radius:50%;flex:none}
+.mac-lg b{color:var(--bone);font-weight:600;font-variant-numeric:tabular-nums}
+
+input,button,select,textarea{color-scheme:dark;-webkit-appearance:none;appearance:none}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 1000px var(--surf2) inset !important;
+  -webkit-text-fill-color:var(--bone) !important;
+  caret-color:var(--bone);
+  transition:background-color 9999s ease-in-out 0s;
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:8px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media(max-width:860px){
+  .res{grid-template-columns:1fr;gap:clamp(14px,2.4vh,22px)}
+  .dial{width:clamp(150px,42vw,230px)}
+  .perks{gap:8px}
+  .perk{padding:11px 8px;gap:.4em}
+}
+@media(max-width:560px){
+  h1{max-width:100%}
+  .lede{max-width:36ch;margin-inline:auto}
+  .perks{grid-template-columns:1fr;gap:8px}
+  .perk{flex-direction:row;align-items:center;text-align:left;gap:12px;padding:13px 16px}
+  .perk svg{flex:none}
+  .perk div{flex:1}
+  .duo{grid-template-columns:1fr}
+  .stats{gap:7px}
+  .st{padding:11px 10px}
+  .sheet{max-height:92dvh}
+  .stop{padding:16px 18px}
+  .sbody{padding:18px 18px 26px}
+  .cta-hero{flex-direction:column;align-items:stretch;text-align:center}
+  .cta-hero-ico{margin:0 auto}
+  .cta-hero-t{text-align:center;min-width:0}
+  .cta-act{width:100%}
+  .cta-hero .btn{width:100%}
+}
+@media(max-width:400px){
+  .lede{max-width:32ch}
+  .opt-i{width:2.15em;height:2.15em}
+}
+@media(max-height:680px){
+  .perks{
+    display:flex;flex-wrap:wrap;justify-content:center;
+    gap:8px;width:auto;
+  }
+  .perk{
+    flex:none;width:auto;
+    flex-direction:row;align-items:center;text-align:left;
+    gap:8px;padding:.5em 1.1em;
+    border-radius:100px;
+  }
+  .perk svg{width:16px;height:16px;flex:none}
+  .perk div{flex:none}
+  .perk b{font-size:var(--f5)}
+  .perk small{display:none}
+}
+@media(max-height:420px){
+  .perks{display:none}
+}
+@media(max-height:560px){
+  h1{font-size:clamp(1.7rem, min(5.6vw, 7vh), 4.4rem)}
+}
+@media(orientation:landscape) and (max-height:560px){
+  .hero{max-width:min(860px,94vw)}
+  .lede{max-width:54ch;margin-inline:auto}
+  .sheet{max-height:95dvh}
+  .res{grid-template-columns:.75fr 1.25fr}
+  .dial{width:clamp(130px,20vw,190px)}
+}
+</style>
+</head>
+<body>
+<div class="page-bg" aria-hidden="true"></div>
+
+<!-- ═════════ HERO ═════════ -->
+<section class="screen on" id="scHero">
+  <div class="hero">
+    <div class="gift"><span class="g-ico">🎁</span><span>Безкоштовна консультація <b>в&nbsp;подарунок</b></span></div>
+
+    <h1>Скільки коштує проєкт <em>вашого&nbsp;будинку</em>?</h1>
+
+    <p class="lede">За&nbsp;2&nbsp;хвилини отримаєте орієнтовну вартість проєкту вашого будинку — у гривнях і в доларах за м², безкоштовно.</p>
+
+    <div class="cta-zone">
+      <button class="btn" id="go">Розрахувати вартість</button>
+      <p class="note">На ринку з&nbsp;2006 року · <b>650+</b> виконаних проєктів</p>
+    </div>
+
+    <div class="perks">
+      <div class="perk">
+        <svg viewBox="0 0 24 24"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-7h6v7"/></svg>
+        <div><b>20 років досвіду</b><small>на ринку з 2006, 650+ проєктів</small></div>
+      </div>
+      <div class="perk">
+        <svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="4"/></svg>
+        <div><b>Ставка від 7 $/м²</b><small>прозора ціна, порівняйте з ринком</small></div>
+      </div>
+      <div class="perk">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div><b>Результат за 2 хвилини</b><small>без реєстрації і дзвінків</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ RESULTS ═════════ -->
+<section class="screen" id="scRes">
+  <div class="res-wrap">
+
+    <div class="res">
+      <div class="dial-wrap">
+        <div class="dial">
+          <div class="dial-core">
+            <div class="dial-n" id="oCost">0</div>
+            <div class="dial-u">₴</div>
+            <div class="dial-c">орієнтовна вартість проєкту</div>
+          </div>
+        </div>
+        <div class="res-name"><span id="oName"></span>, ось ваш розрахунок</div>
+        <div class="dial-note">Точна ціна фіксується в договорі</div>
+      </div>
+
+      <div>
+        <div class="stats">
+          <div class="st"><div class="st-l">Ставка за м²</div><div class="st-v" id="oRate">—</div><div class="st-s">орієнтовно</div></div>
+          <div class="st"><div class="st-l">Строк проєкту</div><div class="st-v">14–30</div><div class="st-s">днів</div></div>
+          <div class="st"><div class="st-l">Документи</div><div class="st-v" id="oDoc">—</div><div class="st-s" id="oDocS">—</div></div>
+        </div>
+
+        <div class="panel">
+          <div class="ph"><span>Що входить у проєкт</span><b id="oDiv">—</b></div>
+          <div class="mac" id="incBar"></div>
+          <div class="mac-lg" id="incLeg"></div>
+
+          <div class="combo-div"></div>
+
+          <div class="ph"><span>Строки виконання</span><b>поетапно</b></div>
+          <div class="mac-lg">
+            <span><i style="background:var(--blue)"></i>Ескіз <b>~10 днів</b></span>
+            <span><i style="background:var(--apricot)"></i>Робочий проєкт <b>14–30 днів</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-hero">
+      <div class="cta-hero-ico">🎁</div>
+      <div class="cta-hero-t">
+        <strong>Безкоштовна консультація</strong>
+        <small>На консультації розберемо ваш розрахунок, уточнимо ціну під вашу ділянку й відповімо, що входить у проєкт і скільки це займе.</small>
+      </div>
+      <div class="cta-act">
+        <span class="free">Безкоштовно</span>
+        <a href="https://t.me/+380986491091" class="btn" target="_blank" rel="noopener">Записатися</a>
+      </div>
+    </div>
+
+    <div class="insights">
+      <div class="insights-h">Що це означає для вас</div>
+      <div id="insBox"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═════════ QUIZ ═════════ -->
+<div class="veil" id="veil">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="stop">
+      <div class="ruler"><svg viewBox="0 0 200 20" preserveAspectRatio="none"><g id="rg"></g></svg></div>
+      <div class="snum" id="sn">1/5</div>
+      <button class="x" id="closeQ" aria-label="Закрити">✕</button>
+    </div>
+    <div class="gift gift-sm"><span class="g-ico">🎁</span><span>Консультація <b>в&nbsp;подарунок</b></span></div>
+    <div class="sbody">
+
+      <div class="step on" data-s="1">
+        <div class="q">Який будинок плануєте?</div>
+        <div class="opts">
+          <button class="opt" data-v="1"><span class="opt-i">🏠</span><span><span class="opt-t">Одноповерховий</span><span class="opt-d">Весь на одному рівні</span></span></button>
+          <button class="opt" data-v="1.1"><span class="opt-i">🏡</span><span><span class="opt-t">З мансардою</span><span class="opt-d">Поверх + житлова мансарда</span></span></button>
+          <button class="opt" data-v="1.15"><span class="opt-i">🏢</span><span><span class="opt-t">Двоповерховий</span><span class="opt-d">Два повні поверхи</span></span></button>
+        </div>
+      </div>
+
+      <div class="step" data-s="2">
+        <div class="q">Складність форми будинку?</div>
+        <div class="opts">
+          <button class="opt" data-v="1"><span class="opt-i">⬜</span><span><span class="opt-t">Проста</span><span class="opt-d">Прямокутна, без еркерів</span></span></button>
+          <button class="opt" data-v="1.15"><span class="opt-i">🔷</span><span><span class="opt-t">Середня</span><span class="opt-d">Еркери, тераси, балкони</span></span></button>
+          <button class="opt" data-v="1.35"><span class="opt-i">✴️</span><span><span class="opt-t">Складна</span><span class="opt-d">Нестандартна форма, великі прольоти</span></span></button>
+        </div>
+      </div>
+
+      <div class="step" data-s="3">
+        <div class="q">Орієнтовна площа будинку</div>
+        <div class="fld">
+          <label for="iAr">Загальна площа всіх поверхів</label>
+          <div class="fw"><input class="inp" id="iAr" type="number" inputmode="numeric" placeholder="120"><span class="suf">м²</span></div>
+        </div>
+        <div class="nav"><button class="bk" data-b="2">←</button><button class="fwd" id="n3">Далі</button></div>
+      </div>
+
+      <div class="step" data-s="4">
+        <div class="q">Потрібні документи для дозволу?</div>
+        <div class="opts">
+          <button class="opt" data-v="yes"><span class="opt-i">📄</span><span><span class="opt-t">Так, потрібні</span><span class="opt-d">+ схема намірів забудови, від 300 $</span></span></button>
+          <button class="opt" data-v="no"><span class="opt-i">✅</span><span><span class="opt-t">Ні або ще не знаю</span><span class="opt-d">Рахуємо тільки проєкт</span></span></button>
+        </div>
+      </div>
+
+      <div class="step" data-s="5">
+        <div class="lhead">
+          <div class="q">Розрахунок готовий</div>
+          <p>Куди надіслати результат і запис на консультацію?</p>
+        </div>
+        <div class="fld"><label for="iN">Ім'я</label><input class="inp" id="iN" type="text" placeholder="Як до вас звертатися?" style="padding-right:1em"></div>
+        <div class="fld"><label for="iTg">Telegram або телефон</label><input class="inp" id="iTg" type="text" placeholder="@username або +380…" style="padding-right:1em"></div>
+        <div class="nav"><button class="bk" data-b="4">←</button><button class="fwd" id="fin">Показати результат</button></div>
+        <p class="fine">Оберіть зручний час для безкоштовної консультації. Не надсилаємо спам, дані не передаємо третім особам.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const D={};
+const STEPS=5;
+const ERATE=45.87;   /* курс ₴/$ — онови за потреби */
+
+function ruler(step){
+  let h='';
+  for(let i=0;i<=30;i++){
+    const x=i*(200/30), maj=i%5===0;
+    h+=`<line class="${(i/30)<=(step/STEPS)?'rf':'rt'}" x1="${x.toFixed(1)}" y1="${maj?3:7}" x2="${x.toFixed(1)}" y2="17"/>`;
+  }
+  $('#rg').innerHTML=h;
+}
+ruler(1);
+
+let cur=1;
+const go=n=>{cur=n;$$('.step').forEach(s=>s.classList.toggle('on',+s.dataset.s===n));$('#sn').textContent=n+'/'+STEPS;ruler(n);$('.sbody').scrollTop=0};
+const openQ=()=>$('#veil').classList.add('on');
+const closeQ=()=>$('#veil').classList.remove('on');
+
+$('#go').addEventListener('click',openQ);
+$('#closeQ').addEventListener('click',closeQ);
+$('#veil').addEventListener('click',e=>{if(e.target===$('#veil'))closeQ()});
+$$('.bk').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.b)));
+
+function choice(s,k,nx){
+  $$(`.step[data-s="${s}"] .opt`).forEach(b=>b.addEventListener('click',function(){
+    $$(`.step[data-s="${s}"] .opt`).forEach(x=>x.classList.remove('sel'));
+    this.classList.add('sel');
+    D[k]=isNaN(+this.dataset.v)?this.dataset.v:+this.dataset.v;
+    setTimeout(nx,190);
+  }));
+}
+choice(1,'floor',()=>go(2));
+choice(2,'cplx',()=>go(3));
+choice(4,'docs',()=>go(5));
+
+const chk=(el,ok)=>{el.classList.toggle('bad',!ok);return ok};
+
+$('#n3').addEventListener('click',()=>{
+  const a=+$('#iAr').value;
+  if(chk($('#iAr'),a>=50&&a<=1500)){D.area=a;go(4)}
+});
+$('#fin').addEventListener('click',()=>{
+  const n=$('#iN').value.trim(), c=$('#iTg').value.trim();
+  if(![chk($('#iN'),n.length>1),chk($('#iTg'),c.length>2)].every(Boolean))return;
+  D.name=n;D.contact=c;
+  /* ─── LEAD HOOK: тут відправляєш D у Supabase / бекенд ─── */
+  console.log('LEAD',D);
+  render();
+});
+
+const fmt=n=>Math.round(n).toLocaleString('uk-UA');
+
+function render(){
+  const{floor,cplx,area,docs,name}=D;
+
+  const rateUSD = 7*floor*cplx;                 // ефективна ставка $/м²
+  const projUSD = area*rateUSD;                 // проєкт, $
+  const docsUSD = docs==='yes' ? 300*cplx : 0;  // схема намірів забудови, $
+  const totalUSD = projUSD + docsUSD;
+  let totalUAH = Math.round(totalUSD*ERATE/100)*100;   // до сотень ₴
+  const docsUAH = Math.round(docsUSD*ERATE/100)*100;
+
+  closeQ();
+  $('#scHero').classList.remove('on');
+  $('#scRes').classList.add('on');
+
+  $('#oName').textContent=name.split(' ')[0];
+  $('#oRate').textContent=rateUSD.toFixed(1).replace('.',',')+' $';
+  if(docs==='yes'){
+    $('#oDoc').textContent='Так';
+    $('#oDocS').textContent='+ '+fmt(docsUAH)+' ₴';
+  }else{
+    $('#oDoc').textContent='—';
+    $('#oDocS').textContent='не потрібні';
+  }
+
+  // Що входить у проєкт — розділи
+  const parts=[
+    ['Архітектурний','var(--mint)'],
+    ['Конструктивний','var(--apricot)'],
+    ['Інженерний','var(--blue)']
+  ];
+  if(docs==='yes')parts.push(['Дозвільні документи','var(--warn)']);
+  $('#oDiv').textContent=parts.length+' розділи';
+  $('#incBar').innerHTML=parts.map(p=>`<i style="flex:1;background:${p[1]}"></i>`).join('');
+  $('#incLeg').innerHTML=parts.map(p=>`<span><i style="background:${p[1]}"></i>${p[0]}</span>`).join('');
+
+  // лічильник головної цифри
+  const el=$('#oCost'); let n=0, st=Math.ceil(totalUAH/36);
+  const iv=setInterval(()=>{n+=st; if(n>=totalUAH){n=totalUAH;clearInterval(iv)} el.textContent=n.toLocaleString('uk-UA')},30);
+
+  requestAnimationFrame(()=>{
+    $$('#incBar > i').forEach(i=>i.style.flex='1');
+  });
+
+  // персональні висновки
+  const floorWord = floor>=1.15?'двоповерховий':floor>=1.1?'з мансардою':'одноповерховий';
+  const cplxWord = cplx>=1.35?'складну':cplx>=1.15?'середню':'просту';
+  const ins=[
+    ['🏠',`Для будинку <b>${fmt(area)} м²</b> (${floorWord}) орієнтовна вартість проєкту — <b>${fmt(totalUAH)} ₴</b>. Точну суму зафіксуємо в договорі після консультації.`],
+    ['📐',`Ви обрали <b>${cplxWord} форму</b> — вона впливає на ставку за м². На консультації підкажемо, як оптимізувати проєкт під ваш бюджет.`],
+    docs==='yes'
+      ? ['📄',`Для старту потрібна <b>схема намірів забудови</b> — підготуємо її теж (від 300 $). Сам будівельний паспорт видає ДАБІ.`]
+      : ['🧭',`Якщо знадобляться документи для дозволу — підкажемо, що саме потрібно під вашу ділянку, на безкоштовній консультації.`]
+  ];
+  $('#insBox').innerHTML=ins.map(([i,p])=>`<div class="ins"><i>${i}</i><p>${p}</p></div>`).join('');
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeQ()}
+  if(e.key==='Enter'&&$('#veil').classList.contains('on')){const b=$(`.step[data-s="${cur}"] .fwd`);if(b)b.click()}
+});
+})();
+</script>
+</body>
+</html>
